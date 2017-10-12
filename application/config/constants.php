@@ -13,6 +13,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 defined('SHOW_DEBUG_BACKTRACE') OR define('SHOW_DEBUG_BACKTRACE', TRUE);
 
+// Configuration de la base de donnée
+defined('BDD_HOSTNAME') OR define('BDD_HOSTNAME', 'localhost');
+defined('BDD_USERNAME') OR define('BDD_USERNAME', 'root');
+defined('BDD_PASSWORD') OR define('BDD_PASSWORD', 'root');
+defined('BDD_NAME') OR define('BDD_NAME', 'dbcaspratique');
+
+defined('BDD_DRIVER') OR define('BDD_DRIVER', 'mysqli');
+defined('BDD_PREFIX') OR define('BDD_PREFIX', '');
+defined('BDD_PCONNECT') OR define('BDD_PCONNECT', FALSE);
+defined('BDD_DEBUG') OR define('BDD_DEBUG', TRUE);
+defined('BDD_CACHE_ON') OR define('BDD_CACHE_ON', FALSE);
+defined('BDD_CACHEDIR') OR define('BDD_CACHEDIR', '');
+defined('BDD_CHAR_SET') OR define('BDD_CHAR_SET', 'utf8');
+defined('BDD_COLLAT') OR define('BDD_COLLAT', 'utf8_general_ci');
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes
