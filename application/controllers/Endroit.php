@@ -41,9 +41,9 @@ public function ajax_list()
 		//production à format du json
 		echo json_encode($output);
 	}
-public function ajax_edit($id)
+public function ajax_edit($endroit_id)
 	{
-		$data = $this->endroit->get_by_id($id);
+		$data = $this->endroit->get_by_id_endroit($endroit_id);
 		echo json_encode($data);
 	}
 
@@ -53,8 +53,8 @@ public function ajax_add()
 		$data = array(
 				'ville' => $this->input->post('ville'),
 				'image' => $this->input->post('image'),
-				'description' => $this->input->post('description'),);
-		$insert = $this->endroit->save($data);
+				'description' => $this->input->post('description'));
+		$insert = $this->endroit->insert_endroit($data);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -64,13 +64,15 @@ public function ajax_update()
 		$data = array(
 				'ville' => $this->input->post('ville'),
 				'image' => $this->input->post('image'),
-				'description' => $this->input->post('description'),);
-		$this->endroit->update(array('endroit_id' => $this->input->post('endroit_id')), $data);
+				'description' => $this->input->post('description'));
+		$this->endroit->update_endroits(array('endroit_id' => $this->input->post('endroit_id')), 
+			$data);
+      
 		echo json_encode(array("status" => TRUE));
 	}
-public function ajax_delete($id)
+public function ajax_delete($endroit_id)
 	{
-		$this->endroit->delete_by_id($id);
+		$this->endroit->delete_by_id_endroit($endroit_id);
 		echo json_encode(array("status" => TRUE));
 	}
 private function _validate()

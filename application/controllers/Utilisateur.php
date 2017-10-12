@@ -30,8 +30,8 @@ class Utilisateur extends CI_Controller {
 			$row[] = $user->date_anniversaire;
 			
 			//ajoutez action sur HTML
-			$row[] = '<a class="btn btn-sm btn-primary btn-rounded btn-custom" href="javascript:void(0)" title="Edit" onclick="edit_user('."'".$user->utilisateur_id."'".')"><i class="glyphicon glyphicon-pencil"></i> Modifier</a>
-				  <a class="btn btn-sm btn-danger btn-rounded btn-custom" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$user->utilisateur_id."'".')"><i class="glyphicon glyphicon-trash"></i> Supprimer</a>';
+			$row[] = '<a class="btn btn-sm btn-primary btn-rounded btn-custom" href="javascript:void(0)" title="Edit" onclick="edit_users('."'".$user->utilisateur_id."'".')"><i class="glyphicon glyphicon-pencil"></i> Modifier</a>
+				  <a class="btn btn-sm btn-danger btn-rounded btn-custom" href="javascript:void(0)" title="Hapus" onclick="delete_users('."'".$user->utilisateur_id."'".')"><i class="glyphicon glyphicon-trash"></i> Supprimer</a>';
 		
 			$data[] = $row;
 		}
@@ -46,9 +46,9 @@ class Utilisateur extends CI_Controller {
 		echo json_encode($output);
 	}
 
-	public function ajax_edit($id)
+	public function ajax_edit($utilisateur_id)
 	{
-		$data = $this->user->get_by_id($id);
+		$data = $this->user->get_by_id_user($utilisateur_id);
 		$data->date_anniversaire = ($data->date_anniversaire == '0000-00-00') ? '' : $data->date_anniversaire; // if 0000-00-00 set tu empty for datepicker compatibility
 		echo json_encode($data);
 	}
@@ -58,12 +58,12 @@ class Utilisateur extends CI_Controller {
 		$this->_validate();
 		$data = array(
 				'nom' => $this->input->post('nom'),
-				'email' => $this->input->post('nom'),
+				'email' => $this->input->post('email'),
 				'genre' => $this->input->post('genre'),
-				'date_anniversaire' => $this->input->post('date_anniversaire'),
+				'date_anniversaire' => $this->input->post('date_anniversaire')
 				
 			);
-		$insert = $this->user->save($data);
+		$insert = $this->user->insert_user($data);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -72,18 +72,18 @@ class Utilisateur extends CI_Controller {
 		$this->_validate();
 		$data = array(
 				'nom' => $this->input->post('nom'),
-				'email' => $this->input->post('nom'),
+				'email' => $this->input->post('email'),
 				'genre' => $this->input->post('genre'),
-				'date_anniversaire' => $this->input->post('date_anniversaire'),
+				'date_anniversaire' => $this->input->post('date_anniversaire')
 				
 			);
-		$this->user->update(array('utilisateur_id' => $this->input->post('id')), $data);
+		$this->user->update_usrs(array('utilisateur_id' => $this->input->post('utilisateur_id')), $data);
 		echo json_encode(array("status" => TRUE));
 	}
 
-   public function ajax_delete($id)
+   public function ajax_delete($utilisateur_id)
 	{
-		$this->user->delete_by_id($id);
+		$this->user->delete_by_id_user($utilisateur_id);
 		echo json_encode(array("status" => TRUE));
 	}
    private function _validate()
@@ -124,7 +124,4 @@ class Utilisateur extends CI_Controller {
 			exit();
 		}
 	}
-	
-	
-	
 }

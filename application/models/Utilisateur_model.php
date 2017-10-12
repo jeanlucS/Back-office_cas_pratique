@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Utilisateur_model extends CI_Model {
 
-	var $table = 'utilisateur';
 	var $column_order = array('nom','email','genre','date_anniversaire',null); 
 	var $column_search = array('nom','email'); 
 	var $order = array('nom' => 'asc'); 
@@ -16,18 +15,18 @@ class Utilisateur_model extends CI_Model {
 	private function _get_datatables_query()
 	{
 		
-		$this->db->from($this->table);
+		$this->db->from('utilisateur');
 
 		$i = 0;
 	
-		foreach ($this->column_search as $item) // loop column 
+		foreach ($this->column_search as $item) 
 		{
-			if($_POST['search']['value']) // if datatable send POST for search
+			if($_POST['search']['value']) 
 			{
 				
-				if($i===0) // first loop
+				if($i===0) 
 				{
-					$this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+					$this->db->group_start(); 
 					$this->db->like($item, $_POST['search']['value']);
 				}
 				else
@@ -35,13 +34,13 @@ class Utilisateur_model extends CI_Model {
 					$this->db->or_like($item, $_POST['search']['value']);
 				}
 
-				if(count($this->column_search) - 1 == $i) //last loop
-					$this->db->group_end(); //close bracket
+				if(count($this->column_search) - 1 == $i) 
+					$this->db->group_end(); 
 			}
 			$i++;
 		}
 		
-		if(isset($_POST['order'])) // here order processing
+		if(isset($_POST['order'])) 
 		{
 			$this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
 		} 
@@ -70,37 +69,33 @@ class Utilisateur_model extends CI_Model {
 
 	public function count_all()
 	{
-		$this->db->from($this->table);
+		$this->db->from('utilisateur');
 		return $this->db->count_all_results();
 	}
 
-	public function get_by_id($id)
+	public function get_by_id_user($utilisateur_id)
 	{
-		$this->db->from($this->table);
-		$this->db->where('utilisateur_id',$id);
+		$this->db->from('utilisateur');
+		$this->db->where('utilisateur_id',$utilisateur_id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
-
-	public function save($data)
+	public function insert_user($data)
 	{
-		$this->db->insert($this->table, $data);
+		$this->db->insert('utilisateur', $data);
 		return $this->db->insert_id();
 	}
 
-	public function update($where, $data)
+	public function update_usrs($where, $data)
 	{
-		$this->db->update($this->table, $data, $where);
+		$this->db->update('utilisateur',$data,$where);
 		return $this->db->affected_rows();
 	}
 
-	public function delete_by_id($id)
+	public function delete_by_id_user($utilisateur_id)
 	{
-		$this->db->where('utilisateur_id', $id);
-		$this->db->delete($this->table);
+		$this->db->where('utilisateur_id', $utilisateur_id);
+		$this->db->delete('utilisateur');
 	}
-	
-	
-
 }

@@ -74,30 +74,30 @@ class Avis_model extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
-	public function get_by_id($id)
+	public function get_by_id_avis($avis_id)
 	{
 		$this->db->from('avis');
-		$this->db->where('avis_id',$id);
+		$this->db->where('avis_id',$avis_id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function save($data)
+	public function insert_avis($data)
 	{
 		$this->db->insert('avis',$data);
 		return $this->db->insert_id();
 	}
 
-	public function update($where, $data)
+	public function update_avis($where, $data)
 	{
 		$this->db->update('avis', $data, $where);
 		return $this->db->affected_rows();
 	}
 
-	public function delete_by_id($id)
+	public function delete_by_id_avis($avis_id)
 	{
-		$this->db->where('avis_id', $id);
+		$this->db->where('avis_id', $avis_id);
 		$this->db->delete('avis');
 	}
 	

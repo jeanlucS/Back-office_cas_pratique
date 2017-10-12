@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Endroit_model extends CI_Model {
 
-	var $table = 'endroit';
 	var $column_order = array('ville','image','description',null); 
 	var $column_search = array('ville','description'); 
 	var $order = array('ville' => 'asc'); 
@@ -16,7 +15,7 @@ class Endroit_model extends CI_Model {
 	private function _get_datatables_query()
 	{
 		
-		$this->db->from($this->table);
+		$this->db->from('endroit');
 
 		$i = 0;
 	
@@ -70,35 +69,35 @@ class Endroit_model extends CI_Model {
 
 	public function count_all()
 	{
-		$this->db->from($this->table);
+		$this->db->from('endroit');
 		return $this->db->count_all_results();
 	}
 
-	public function get_by_id($id)
+	public function get_by_id_endroit($endroit_id)
 	{
-		$this->db->from($this->table);
-		$this->db->where('endroit_id',$id);
+		$this->db->from('endroit');
+		$this->db->where('endroit_id',$endroit_id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function save($data)
+	public function insert_endroit($data)
 	{
-		$this->db->insert($this->table, $data);
+		$this->db->insert('endroit', $data);
 		return $this->db->insert_id();
 	}
 
-	public function update($where, $data)
+	public function update_endroits($where, $data)
 	{
-		$this->db->update($this->table, $data, $where);
+		$this->db->update('endroit',$data,$where);
 		return $this->db->affected_rows();
 	}
 
-	public function delete_by_id($id)
+	public function delete_by_id_endroit($endroit_id)
 	{
-		$this->db->where('endroit_id', $id);
-		$this->db->delete($this->table);
+		$this->db->where('endroit_id', $endroit_id);
+		$this->db->delete('endroit');
 	}
 
 
